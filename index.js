@@ -57,12 +57,15 @@ addRoommate.addEventListener("click", addNewRoommate)
 
 document.body.addEventListener("contextmenu", (e) => {
     if(e.target.tagName === "LI" && e.target["id"] !== "add-roommate") {
-        e.preventDefault();
-        localStorageRoommates.splice(localStorageRoommates.indexOf(e.target.textContent), 1)
-        removeRadio(e.target.textContent)
-        removeTableRowByName(e.target.textContent)
-        localStorage.setItem("roommates", JSON.stringify(localStorageRoommates))
-        e.target.remove()
+        let sure = confirm(`Are you sure you want to delete ${e.target.textContent}?`)
+        if (sure){
+            e.preventDefault();
+            localStorageRoommates.splice(localStorageRoommates.indexOf(e.target.textContent), 1)
+            removeRadio(e.target.textContent)
+            removeTableRowByName(e.target.textContent)
+            localStorage.setItem("roommates", JSON.stringify(localStorageRoommates))
+            e.target.remove()
+        }
     }
 })
 
