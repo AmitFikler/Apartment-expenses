@@ -22,17 +22,22 @@ if (JSON.parse(localStorage.getItem("tableRows")) === null) {
 }
 let localStorageTablerows = JSON.parse(localStorage.getItem("tableRows"))
 
+for(let shop of localStorageTablerows) {
+    retriveShoppingList(shop)
+}
 retriveRoommates()
+
+
 
 
 plusBtn.addEventListener("click",()=> {
     if (addForm.style.display === "none") {
-        plusBtn.textContent = "x"
+        plusBtn.style.transform = "rotate(45deg)"
         plusBtn.style.backgroundColor = "#ff6161"
         addForm.style.display = "block"
     }
     else {
-        plusBtn.textContent = "+"
+        plusBtn.style.transform = ""
         addForm.style.display = "none"
         plusBtn.style.backgroundColor = "rgb(138, 224, 138)"
     }
@@ -80,20 +85,9 @@ function appendTr() {
     const what = document.getElementById("what").value
     const who = document.querySelector('input[name="roommate"]:checked').value;
     const how = document.getElementById("how").value
-
-
-    const newRow = table.insertRow(table.length)
-
-
-    const cel1 = newRow.insertCell(0);
-    const cel2 = newRow.insertCell(1)
-    const cel3 = newRow.insertCell(2)
-
-    cel1.innerHTML = what;
-    cel2.innerHTML = `${how}$`;
-    cel3.innerHTML = who;
-
-    localStorageTablerows.push({"what":what,"how":how,"who":who})
+    const newTr = {"what":what,"how":how,"who":who}
+    retriveShoppingList(newTr)
+    localStorageTablerows.push(newTr)
     localStorage.setItem("tableRows", JSON.stringify(localStorageTablerows))
 }
 
@@ -108,6 +102,21 @@ function retriveRoommates() {
     }
 }
 
+function retriveShoppingList({what,how,who}) {
+    const newRow = table.insertRow(table.length)
+
+
+    const cel1 = newRow.insertCell(0);
+    const cel2 = newRow.insertCell(1)
+    const cel3 = newRow.insertCell(2)
+
+    cel1.innerHTML = what;
+    cel2.innerHTML = `${how}$`;
+    cel3.innerHTML = who;
+
+    totalExpenses()
+}
+
 function addRadio(str) {
     const radioInput = document.createElement("input")
     radioInput.type = "radio"
@@ -119,6 +128,21 @@ function addRadio(str) {
     label.textContent = str
     radioDiv.appendChild(radioInput)
     radioDiv.appendChild(label)
+}
+
+
+function calculation() {
+    const prices = []
+    for (let i = 1; i<document.querySelectorAll("tr").length; i++) {
+        const price = document.querySelectorAll("tr")[i].children[1].textContent.slice(0,-1)
+        prices.push(Number(price))
+    }
+    return prices.reduce((a,b) => a + b, 0)  
+}
+
+
+function totalExpenses() {
+    document.getElementById("total").textContent = `${calculation()}$`
 }
 
 
