@@ -4,7 +4,7 @@
 body {
     text-align: center;
     font-family: 'Philosopher', sans-serif;
-    background-color: #12a4d9;
+    background-color: #12a4d9a6;
 }
 
 #top-navbar {
@@ -30,6 +30,7 @@ table {
     margin-left: auto;
     margin-right: auto;
     margin-top: 150px;
+    border-radius: 16px;
 }
 
 table, th, td {
@@ -37,6 +38,8 @@ table, th, td {
     border-collapse: collapse;
     padding: 10px;
 }
+
+
 
 
 #plus {
@@ -80,6 +83,10 @@ th {
     background-color: #322e2f;
     color: white;
 }
+#total-expenses {
+    margin-top: 30px;
+    font-size: 20px;
+}
 
 
 
@@ -104,6 +111,10 @@ th {
     h4 {
         padding: 1px;
         font-size: 14px;
+    }
+    #total-expenses {
+        font-size: 15px;
+        margin-left: 80px;
     }
 
     
